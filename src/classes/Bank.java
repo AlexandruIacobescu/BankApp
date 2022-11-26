@@ -15,9 +15,10 @@ public class Bank {
     }
 
     public void addClient(Client c) throws ExistingAccountException {
-        for(Client client : clients){
-            for(Account account : client.getAccounts()){
-                for(Account account1 : c.getAccounts()){
+        // TODO use a set
+        for(var client : clients){
+            for(var account : client.getAccounts()){
+                for(var account1 : c.getAccounts()){
                     if(account.getAccountNumber().equals(account1.getAccountNumber()))
                         throw new ExistingAccountException("This account number is already owned by another client : " + account.getAccountNumber());
                 }
@@ -27,7 +28,7 @@ public class Bank {
     }
 
     public Client getClient(String name) {
-        for (Client client : clients) {
+        for (var client : clients) {
             if (client.getName().equals(name)) {
                 return client;
             }

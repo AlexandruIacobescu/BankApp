@@ -12,7 +12,6 @@ public class AccountEUR extends Account implements Transfer {
 
     public double getInterest() {
         return 0.01;
-
     }
 
     @Override

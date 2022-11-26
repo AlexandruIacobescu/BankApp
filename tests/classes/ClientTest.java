@@ -1,12 +1,10 @@
 package classes;
 
+import exceptions.AccountClosingException;
 import exceptions.DeposeException;
-import exceptions.ExistingAccountException;
 import exceptions.IllegalAccountException;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientTest {
 
@@ -28,6 +26,25 @@ public class ClientTest {
     public void addAccountToClientTest() throws DeposeException, IllegalAccountException {
         Client client = new Client("Anna Holt", "42nd Downing Street", Account.TYPE.RON, "1234-5678-9101-1213", 250);
         client.addAccount(Account.TYPE.RON, "1234-5678-9101-1213", 900);
+    }
+
+    @Test
+    public void createClientUsingTheClientBuilderTest() throws DeposeException, IllegalAccountException {
+        Client client1 = new Client.ClientBuilder()
+                .name("Anna Gunn")
+                .address("44th Downing Street")
+                .dateOfBirth("2001-09-06")
+                .addAccount(Account.TYPE.RON, "9874-2558-6321-2011", 620)
+                .build();
+
+        //System.out.println(client1);
+    }
+
+    @Test
+    public void closeAccountTest() throws DeposeException, IllegalAccountException, AccountClosingException {
+        Client client = new Client("Anna Holt", "42nd Downing Street", Account.TYPE.RON, "1234-5678-9101-1213", 250);
+        client.addAccount(Account.TYPE.RON, "1234-5678-9101-1214", 0);
+        client.closeAccount("1234-5678-9101-1214");
     }
 
 }
