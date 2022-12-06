@@ -2,9 +2,14 @@ package classes;
 
 import exceptions.DeposeException;
 import exceptions.IllegalAccountException;
+import org.junit.Test;
 
-public class Program {
-    public static void main(String[] args) throws DeposeException, IllegalAccountException {
+import static org.junit.jupiter.api.Assertions.*;
+
+public class EntityTest {
+
+    @Test
+    public void bankClientCommunicationTest() throws DeposeException, IllegalAccountException {
         ApplicationMediator mediator = new ApplicationMediator();
         Bank bank = Bank.getInstance("NewBank", mediator);
 
@@ -22,4 +27,5 @@ public class Program {
         bank.send("Hello message");
         client1.send("Hello Response");
     }
+
 }

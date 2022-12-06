@@ -3,27 +3,35 @@ package classes;
 import exceptions.AccountClosingException;
 import exceptions.DeposeException;
 import exceptions.IllegalAccountException;
+import interfaces.Mediator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client {
+public class Client extends Entity{
     private String name;
     private String address;
     private String dateOfBirth;
     private List<Account> accounts;
 
-    public Client(String name, String address, Account.TYPE type, String accountNumber, double amount) throws DeposeException, IllegalAccountException {
+    public Client(String name, String address, Account.TYPE type, String accountNumber, double amount, Mediator m) throws DeposeException, IllegalAccountException {
+        super(m);
         this.name = name;
         this.address = address;
         accounts = new ArrayList<>();
         addAccount(type, accountNumber, amount);
     }
 
+    public void receive(String msg) {
+        System.out.println("Colleague received: " + msg);
+    }
+
     public static class ClientBuilder {
         private String name;
         private String address;
         private String dateOfBirth;
+
+        private Mediator mediator;
         private List<Account> accounts = new ArrayList<>();
         public ClientBuilder name(String name){
             this.name = name;
@@ -37,6 +45,11 @@ public class Client {
 
         public ClientBuilder dateOfBirth(String dof){
             this.dateOfBirth = dof;
+            return this;
+        }
+
+        public ClientBuilder mediator(Mediator m){
+            this.mediator = m;
             return this;
         }
 
@@ -59,6 +72,7 @@ public class Client {
         }
     }
     public Client(ClientBuilder builder) {
+        super(builder.mediator);
         this.name = builder.name;
         this.address = builder.address;
         this.dateOfBirth = builder.dateOfBirth;
@@ -107,7 +121,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return "\n\tClient [name=" + name + ", address=" + address + ", dof=" + dateOfBirth + ", accounts=" + accounts + "]";
+        return "\n\tClient [name=" + name + ", address=" + address + ", dob=" + dateOfBirth + ", accounts=" + accounts + "]";
     }
 
     public String getName() {

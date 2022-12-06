@@ -1,15 +1,31 @@
 package classes;
 
 import exceptions.ExistingAccountException;
+import interfaces.Mediator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bank {
+public class Bank extends Entity{
+
+    private static volatile Bank instance;
+
+    public static Bank getInstance(String bankCode, Mediator m){
+        Bank result = instance;
+        if(result == null){
+            synchronized (Bank.class){
+                if(result == null){
+                    instance = result = new Bank(bankCode, m);
+                }
+            }
+        }
+        return instance;
+    }
     private List<Client> clients;
     private String bankCode = null;
 
-    public Bank(String bankCode) {
+    private Bank(String bankCode, Mediator m) {
+        super(m);
         this.bankCode = bankCode;
         clients = new ArrayList<>();
     }
@@ -38,5 +54,9 @@ public class Bank {
     @Override
     public String toString() {
         return "Bank [code=" + bankCode + ", clients=" + clients + "]";
+    }
+
+    public void receive(String msg) {
+        System.out.println("Message received: " + msg);
     }
 }

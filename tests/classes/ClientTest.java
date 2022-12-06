@@ -3,6 +3,7 @@ package classes;
 import exceptions.AccountClosingException;
 import exceptions.DeposeException;
 import exceptions.IllegalAccountException;
+import interfaces.Mediator;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
@@ -10,21 +11,27 @@ public class ClientTest {
 
     @Test
     public void createValidClientWithRONAccountTest() throws DeposeException, IllegalAccountException {
-        Client client = new Client("Anna Holt", "42nd Downing Street", Account.TYPE.RON, "1234-5678-9101-1213", 250);
+        Client client = new Client("Anna Holt", "42nd Downing Street", Account.TYPE.RON, "1234-5678-9101-1213", 250, (msg, client1) -> {
+
+        });
     }
 
     @Test
     public void createValidClientWithInvalidRONAccountTest() {
         double amount = -250;
         IllegalAccountException exception = Assertions.assertThrows(IllegalAccountException.class, () -> {
-            Client client = new Client("Anna Holt", "42nd Downing Street", Account.TYPE.RON, "1234-5678-9101-1213", amount);
+            Client client = new Client("Anna Holt", "42nd Downing Street", Account.TYPE.RON, "1234-5678-9101-1213", amount, (msg, client1) -> {
+
+            });
         });
         Assertions.assertEquals("Cannot create an account with a negative balance : " + amount, exception.getMessage());
     }
 
     @Test
     public void addAccountToClientTest() throws DeposeException, IllegalAccountException {
-        Client client = new Client("Anna Holt", "42nd Downing Street", Account.TYPE.RON, "1234-5678-9101-1213", 250);
+        Client client = new Client("Anna Holt", "42nd Downing Street", Account.TYPE.RON, "1234-5678-9101-1213", 250, (msg, client1) -> {
+
+        });
         client.addAccount(Account.TYPE.RON, "1234-5678-9101-1213", 900);
     }
 
@@ -42,7 +49,9 @@ public class ClientTest {
 
     @Test
     public void closeAccountTest() throws DeposeException, IllegalAccountException, AccountClosingException {
-        Client client = new Client("Anna Holt", "42nd Downing Street", Account.TYPE.RON, "1234-5678-9101-1213", 250);
+        Client client = new Client("Anna Holt", "42nd Downing Street", Account.TYPE.RON, "1234-5678-9101-1213", 250, (msg, client1) -> {
+
+        });
         client.addAccount(Account.TYPE.RON, "1234-5678-9101-1214", 0);
         client.closeAccount("1234-5678-9101-1214");
     }

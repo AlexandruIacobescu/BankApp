@@ -9,10 +9,12 @@ public abstract class Account implements Operations,Cloneable {
     protected String accountNumber;
     protected double amount = 0;
 
+    protected Account() {
+    }
+
     @Override
     public Account clone() {
         try {
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
             return (Account) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
@@ -49,6 +51,10 @@ public abstract class Account implements Operations,Cloneable {
         else if(amount < 0)
             throw new RetrieveException("Cannot retrieve a negative amount : " + amount);
         this.amount -= amount;
+    }
+
+    public double getBalance(){
+        return this.amount;
     }
 
     public String toString() {
