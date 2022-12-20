@@ -57,6 +57,6 @@ public class Bank extends Entity{
     }
 
     public void receive(String msg) {
-        System.out.println("Message received: " + msg);
+        System.out.println("Message from client received: " + msg);
     }
 }

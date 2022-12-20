@@ -23,7 +23,7 @@ public class Client extends Entity{
     }
 
     public void receive(String msg) {
-        System.out.println("Colleague received: " + msg);
+        System.out.println("Message from bank received: " + msg);
     }
 
     public static class ClientBuilder {
